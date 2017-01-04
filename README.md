@@ -13,9 +13,9 @@ npm install lambda-errors --save
 ```js
 const errorFormatter = require('lambda-errors')
 
-errorFormatter.error('error message')
+errorFormatter.format('error message')
 
-errorFormatter.error({
+errorFormatter.format({
     statusCode: 400,
     message: 'error message'
 })
@@ -35,10 +35,10 @@ errorFormatter.error({
 
 ### Other functions
 
-Set code
+Format error with custom code
 
 ```js
-errorFormatter.setCode(400, 'error message')
+errorFormatter.formatCode(400, 'error message')
 ```
 
 Bad request

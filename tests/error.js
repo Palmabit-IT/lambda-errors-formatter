@@ -16,7 +16,7 @@ describe('Error formatter', () => {
   })
 
   it('should get formatted error with custom code', done => {
-    expect(formatter.setCode(fakeCode, fakeError)).to.deep.equal({
+    expect(formatter.formatCode(fakeCode, fakeError)).to.deep.equal({
       statusCode: fakeCode.toString(),
       body: JSON.stringify({message: fakeError}),
       headers: {
@@ -63,8 +63,8 @@ describe('Error formatter', () => {
   })
 
   it('should call generic error function with string', done => {
-    expect(formatter.error(fakeError).statusCode).to.equal('500')
-    expect(formatter.error(fakeError).body).to.equal(JSON.stringify({message: fakeError}))
+    expect(formatter.format(fakeError).statusCode).to.equal('500')
+    expect(formatter.format(fakeError).body).to.equal(JSON.stringify({message: fakeError}))
     done()
   })
 
@@ -74,8 +74,8 @@ describe('Error formatter', () => {
       message: fakeError
     }
 
-    expect(formatter.error(error).statusCode).to.equal(fakeCode.toString())
-    expect(formatter.error(error).body).to.equal(JSON.stringify({message: fakeError}))
+    expect(formatter.format(error).statusCode).to.equal(fakeCode.toString())
+    expect(formatter.format(error).body).to.equal(JSON.stringify({message: fakeError}))
     done()
   })
 
@@ -84,8 +84,8 @@ describe('Error formatter', () => {
       message: fakeError
     }
 
-    expect(formatter.error(error).statusCode).to.equal('500')
-    expect(formatter.error(error).body).to.equal(JSON.stringify({message: fakeError}))
+    expect(formatter.format(error).statusCode).to.equal('500')
+    expect(formatter.format(error).body).to.equal(JSON.stringify({message: fakeError}))
     done()
   })
 
@@ -94,8 +94,8 @@ describe('Error formatter', () => {
       statusCode: fakeCode
     }
 
-    expect(formatter.error(error).statusCode).to.equal(fakeCode.toString())
-    expect(formatter.error(error).body).to.equal(JSON.stringify({message: 'Internal Server Error'}))
+    expect(formatter.format(error).statusCode).to.equal(fakeCode.toString())
+    expect(formatter.format(error).body).to.equal(JSON.stringify({message: 'Internal Server Error'}))
     done()
   })
 })
