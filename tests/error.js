@@ -18,6 +18,7 @@ describe('Error formatter', () => {
   it('should get formatted error with custom code', done => {
     expect(formatter.formatCode(fakeCode, fakeError)).to.deep.equal({
       statusCode: fakeCode.toString(),
+      message: fakeError,
       body: JSON.stringify({message: fakeError}),
       headers: {
         'Content-Type': 'application/json',

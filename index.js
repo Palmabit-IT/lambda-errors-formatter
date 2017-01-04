@@ -6,6 +6,7 @@ const DEFAULT_MESSAGE = 'Internal Server Error'
 const formatCode = (code, message) => {
   return {
     statusCode: code + '',
+    message: message,
     body: JSON.stringify({message: message}),
     headers: {
       'Content-Type': 'application/json',
