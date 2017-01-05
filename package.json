@@ -1,6 +1,6 @@
 {
   "name": "lambda-errors-formatter",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "AWS Lambda errors formatter",
   "main": "index.js",
   "scripts": {
