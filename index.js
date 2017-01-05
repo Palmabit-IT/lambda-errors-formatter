@@ -14,28 +14,37 @@ const formatCode = (code, message) => {
   }
 }
 
-const badRequest = message => {
-  return formatCode(400, message)
+const formatCodeAndError = (code, err) => {
+  if (typeof err === 'string') {
+    return formatCode(code, err)
+
+  } else if (typeof err === 'object') {
+    return formatCode(code, (err.message || DEFAULT_MESSAGE))
+  }
 }
 
-const unauthorized = message => {
-  return formatCode(401, message)
+const badRequest = err => {
+  return formatCodeAndError(400, err)
 }
 
-const forbidden = message => {
-  return formatCode(403, message)
+const unauthorized = err => {
+  return formatCodeAndError(401, err)
 }
 
-const notFound = message => {
-  return formatCode(404, message)
+const forbidden = err => {
+  return formatCodeAndError(403, err)
 }
 
-const conflict = message => {
-  return formatCode(409, message)
+const notFound = err => {
+  return formatCodeAndError(404, err)
 }
 
-const internalServerError = message => {
-  return formatCode(500, message)
+const conflict = err => {
+  return formatCodeAndError(409, err)
+}
+
+const internalServerError = err => {
+  return formatCodeAndError(500, err)
 }
 
 const format = err => {
@@ -49,6 +58,7 @@ const format = err => {
 
 module.exports = {
   formatCode: formatCode,
+  formatCodeAndError: formatCodeAndError,
   badRequest: badRequest,
   unauthorized: unauthorized,
   forbidden: forbidden,

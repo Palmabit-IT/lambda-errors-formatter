@@ -5,13 +5,13 @@ An errors formatter for managing lambda error response
 ## Installation
 
 ```
-npm install lambda-errors --save
+npm install lambda-errors-formatter --save
 ```
 
 ## Usage
 
 ```js
-const errorFormatter = require('lambda-errors')
+const errorFormatter = require('lambda-errors-formatter')
 
 errorFormatter.format('error message')
 
@@ -45,37 +45,37 @@ errorFormatter.formatCode(400, 'error message')
 Bad request
 
 ```js
-errorFormatter.badRequest('error message')
+errorFormatter.badRequest('error message') //status code 400
 ```
 
 Unauthorized
 
 ```js
-errorFormatter.unauthorized('error message')
+errorFormatter.unauthorized('error message') //status code 401
 ```
 
 Forbidden
 
 ```js
-errorFormatter.forbidden('error message')
+errorFormatter.forbidden('error message') //status code 403
 ```
 
 Not found
 
 ```js
-errorFormatter.notFound('error message')
+errorFormatter.notFound('error message') //status code 404
 ```
 
 Conflict
 
 ```js
-errorFormatter.conflict('error message')
+errorFormatter.conflict('error message') //status code 409
 ```
 
 Internal server error
 
 ```js
-errorFormatter.internalServerError('error message')
+errorFormatter.internalServerError('error message') //status code 500
 ```
 
 ## Tests

@@ -3,8 +3,11 @@
 const chai = require('chai')
 const expect = chai.expect
 const faker = require('faker')
+const chaiSubset = require('chai-subset');
 
 const formatter = require('../index')
+
+chai.use(chaiSubset);
 
 describe('Error formatter', () => {
   let fakeCode, fakeError
@@ -97,6 +100,27 @@ describe('Error formatter', () => {
 
     expect(formatter.format(error).statusCode).to.equal(fakeCode.toString())
     expect(formatter.format(error).body).to.equal(JSON.stringify({message: 'Internal Server Error'}))
+    done()
+  })
+
+  it('should call formatCodeAndError function with string', done => {
+    expect(formatter.formatCodeAndError(fakeCode, fakeError)).to.containSubset({
+      statusCode: fakeCode.toString(),
+      message: fakeError
+    })
+    done()
+  })
+
+  it('should call formatCodeAndError with object', done => {
+    const error = {
+      statusCode: faker.random.number(),
+      message: fakeError
+    }
+
+    expect(formatter.formatCodeAndError(fakeCode, error)).to.containSubset({
+      statusCode: fakeCode.toString(),
+      message: fakeError
+    })
     done()
   })
 })
