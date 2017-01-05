@@ -21,7 +21,6 @@ describe('Error formatter', () => {
   it('should get formatted error with custom code', done => {
     expect(formatter.formatCode(fakeCode, fakeError)).to.deep.equal({
       statusCode: fakeCode.toString(),
-      message: fakeError,
       body: JSON.stringify({message: fakeError}),
       headers: {
         'Content-Type': 'application/json',
@@ -103,10 +102,18 @@ describe('Error formatter', () => {
     done()
   })
 
+  it('should get generic error if message is null', done => {
+    expect(formatter.format(null)).to.containSubset({
+      statusCode: '500',
+      body: JSON.stringify({message: 'Internal Server Error'})
+    })
+    done()
+  })
+
   it('should call formatCodeAndError function with string', done => {
     expect(formatter.formatCodeAndError(fakeCode, fakeError)).to.containSubset({
       statusCode: fakeCode.toString(),
-      message: fakeError
+      body: JSON.stringify({message: fakeError})
     })
     done()
   })
@@ -114,12 +121,40 @@ describe('Error formatter', () => {
   it('should call formatCodeAndError with object', done => {
     const error = {
       statusCode: faker.random.number(),
-      message: fakeError
+      message: fakeError,
     }
 
     expect(formatter.formatCodeAndError(fakeCode, error)).to.containSubset({
       statusCode: fakeCode.toString(),
-      message: fakeError
+      body: JSON.stringify({message: fakeError})
+    })
+    done()
+  })
+
+  it('should get generic error if message is null', done => {
+    expect(formatter.formatCodeAndError(fakeCode, null)).to.containSubset({
+      statusCode: fakeCode.toString(),
+      body: JSON.stringify({message: 'Internal Server Error'})
+    })
+    done()
+  })
+
+  it('should chain formatCode function', done => {
+    expect(formatter.format(formatter.format(fakeError))).to.containSubset({
+      statusCode: '500',
+      body: JSON.stringify({message: fakeError})
+    })
+    expect(formatter.format(formatter.formatCode(fakeCode, fakeError))).to.containSubset({
+      statusCode: fakeCode.toString(),
+      body: JSON.stringify({message: fakeError})
+    })
+    expect(formatter.formatCode(fakeCode, formatter.formatCode(fakeCode, fakeError))).to.containSubset({
+      statusCode: fakeCode.toString(),
+      body: JSON.stringify({message: fakeError})
+    })
+    expect(formatter.formatCodeAndError(fakeCode, formatter.formatCodeAndError(fakeCode, fakeError))).to.containSubset({
+      statusCode: fakeCode.toString(),
+      body: JSON.stringify({message: fakeError})
     })
     done()
   })
