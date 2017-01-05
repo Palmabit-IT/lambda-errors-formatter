@@ -1,6 +1,6 @@
 # Lambda errors formatters
 
-A class to invoke an AWS Lambda function from an other
+An errors formatter for managing lambda error response
 
 ## Installation
 
@@ -26,6 +26,7 @@ errorFormatter.format({
 ```
 {
     statusCode: 'error code',
+    message: 'error message',
     body: "{message: 'error message'}",
     headers: {
       'Content-Type': 'application/json',
