@@ -28,46 +28,52 @@ const formatCodeAndError = (code, err) => {
     return formatCode(code, err)
 
   } else if (typeof err === 'object') {
-    err = err === null ? {} : err
+    err = (!err || err === null) ? {} : err
     return formatCode(code, (getMessage(err) || DEFAULT_MESSAGE))
   }
+
+  return internalServerError()
 }
 
-const badRequest = (err = BAD_REQUEST_MESSAGE) => {
-  return formatCodeAndError(400, err)
+const badRequest = err => {
+  return formatCodeAndError(400, err || BAD_REQUEST_MESSAGE)
 }
 
-const unauthorized = (err = UNAUTHORIZED_MESSAGE) => {
-  return formatCodeAndError(401, err)
+const unauthorized = err => {
+  return formatCodeAndError(401, err || UNAUTHORIZED_MESSAGE)
 }
 
-const forbidden = (err = FORBIDDEN_MESSAGE) => {
-  return formatCodeAndError(403, err)
+const forbidden = err => {
+  return formatCodeAndError(403, err || FORBIDDEN_MESSAGE)
 }
 
-const notFound = (err = NOT_FOUND_MESSAGE) => {
-  return formatCodeAndError(404, err)
+const notFound = err => {
+  return formatCodeAndError(404, err || NOT_FOUND_MESSAGE)
 }
 
-const conflict = (err = CONFLICT_MESSAGE) => {
-  return formatCodeAndError(409, err)
+const conflict = err => {
+  return formatCodeAndError(409, err || CONFLICT_MESSAGE)
 }
 
-const internalServerError = (err = DEFAULT_MESSAGE) => {
-  return formatCodeAndError(500, err)
+const internalServerError = err => {
+  return formatCodeAndError(500, err || DEFAULT_MESSAGE)
 }
 
-const format = (err = {}) => {
+const format = err => {
   if (typeof err === 'string') {
     return internalServerError(err)
 
   } else if (typeof err === 'object') {
-    err = err === null ? {} : err
+    err = (!err || err === null) ? {} : err
     return formatCode((err.statusCode || DEFAULT_CODE), (getMessage(err) || DEFAULT_MESSAGE))
   }
+
+  return internalServerError()
 }
 
-const getMessage = (err = {}) => {
+const getMessage = err => {
+  err = err || {}
+
   if (typeof err.message !== 'undefined') {
     return err.message
 
@@ -78,7 +84,7 @@ const getMessage = (err = {}) => {
   return null
 }
 
-const parseMessage = (body = '{}') => {
+const parseMessage = body => {
   try {
     const parsed = JSON.parse(body)
     return parsed && parsed.message
