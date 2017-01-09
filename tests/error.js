@@ -23,7 +23,8 @@ describe('Error formatter', () => {
       statusCode: fakeCode.toString(),
       body: JSON.stringify({message: fakeError}),
       headers: {
-        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin' : '*',
+        'Content-Type': 'application/json'
       }
     })
     done()

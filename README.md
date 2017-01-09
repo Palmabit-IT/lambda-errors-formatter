@@ -26,10 +26,10 @@ errorFormatter.format({
 ```
 {
     statusCode: 'error code',
-    message: 'error message',
     body: "{message: 'error message'}",
     headers: {
-      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin' : '*',
+      'Content-Type': 'application/json'
     }
   }
 ```

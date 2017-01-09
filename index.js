@@ -18,7 +18,8 @@ const formatCode = (code, message) => {
     statusCode: code + '',
     body: JSON.stringify({message: message}),
     headers: {
-      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin' : '*',
+      'Content-Type': 'application/json'
     }
   }
 }
