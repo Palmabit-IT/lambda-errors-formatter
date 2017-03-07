@@ -2,6 +2,8 @@
 
 An errors formatter for managing lambda error response
 
+[![Build Status](https://travis-ci.org/Palmabit-IT/lambda-errors-formatter.svg?branch=master)](https://travis-ci.org/Palmabit-IT/lambda-errors-formatter)
+
 ## Installation
 
 ```
